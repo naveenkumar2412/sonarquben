@@ -45,3 +45,11 @@ jobs:
         run: |
           # Replace with your build command (e.g., mvn clean install, npm run build, etc.)
           echo "Running build..."
+          
+        # Run the SonarQube scanner
+      - name: Run SonarQube Scan
+        run: |
+          sonar-scanner \
+            -Dsonar.projectKey=sonarqube \
+            -Dsonar.host.url=http://65.0.117.200:9000 \
+            -Dsonar.login=${{ secrets.SONAR_TOKEN }}
