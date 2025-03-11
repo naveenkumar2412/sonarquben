@@ -33,13 +33,13 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-sonar-
 
-        # Install SonarQube Scanner manually
+         # Install SonarQube Scanner manually
       - name: Install SonarQube Scanner
         run: |
-          # Download the latest version of SonarQube Scanner from GitHub
-          wget https://github.com/SonarSource/sonar-scanner-cli/releases/download/7.0.2./sonar-scanner-cli-7.0.2.-linux.zip
-          unzip sonar-scanner-cli-7.0.2.-linux.zip -d $HOME
-          export PATH=$HOME/sonar-scanner-7.0.2.-linux/bin:$PATH
+          # Download the correct version of SonarQube Scanner from GitHub
+          wget https://github.com/SonarSource/sonar-scanner-cli/releases/download/4.6.2.2472/sonar-scanner-cli-4.6.2.2472-linux.zip
+          unzip sonar-scanner-cli-4.6.2.2472-linux.zip -d $HOME
+          export PATH=$HOME/sonar-scanner-4.6.2.2472-linux/bin:$PATH
 
       # Run SonarQube scan
       - name: Run SonarQube Scan
