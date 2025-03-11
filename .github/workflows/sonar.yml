@@ -41,12 +41,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set up SonarCloud
-        uses: sonarsource/sonarcloud-github-action@v2
-        with:
-          # You can specify your project settings in sonar-project.properties or use env variables
-          sonar-token: ${{ secrets.SONAR_TOKEN }}  # Ensure SONAR_TOKEN is set in your secrets
-
       - name: Run your build and tests
         run: |
           # Replace with your build command (e.g., mvn clean install, npm run build, etc.)
