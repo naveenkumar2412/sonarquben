@@ -33,7 +33,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-sonar-
 
-        # Run SonarQube scan using Docker
+      # Run SonarQube scan using Docker
       - name: Run SonarQube Scan (using Docker)
         run: |
           docker run --rm \
@@ -46,3 +46,4 @@ jobs:
               -Dsonar.sources=src \
               -Dsonar.host.url=http://65.0.117.200:9000 \
               -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+
