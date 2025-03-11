@@ -49,7 +49,7 @@ jobs:
         # Run the SonarQube scanner
       - name: Run SonarQube Scan
         run: |
-          sonar-scanner \
+          sonar-scanner \https://github.com/naveenkumar2412/sonarquben/blob/main/.github/workflows/sonar.yml
             -Dsonar.projectKey=sonarqube \
             -Dsonar.host.url=http://65.0.117.200:9000 \
             -Dsonar.login=${{ secrets.SONAR_TOKEN }}
