@@ -1,0 +1,53 @@
+name: SonarQube Analysis
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  sonarQube:
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout the code
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      # Set up JDK (assuming you're using Java)
+      - name: Set up Java
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'temurin'  # You can also use 'zulu' or other supported distributions
+          java-version: '11'
+
+      # Cache SonarQube scanner dependencies
+      - name: Cache SonarQube dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar-${{ hashFiles('/*.java') }}
+          restore-keys: |
+            ${{ runner.os }}-sonar-
+
+      # SonarQube Scan
+  sonarcloud:
+    name: SonarCloud Scan
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up SonarCloud
+        uses: sonarsource/sonarcloud-github-action@v2
+        with:
+          # You can specify your project settings in sonar-project.properties or use env variables
+          sonar-token: ${{ secrets.SONAR_TOKEN }}  # Ensure SONAR_TOKEN is set in your secrets
+
+      - name: Run your build and tests
+        run: |
+          # Replace with your build command (e.g., mvn clean install, npm run build, etc.)
+          echo "Running build..."
