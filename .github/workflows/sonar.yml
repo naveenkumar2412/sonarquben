@@ -46,10 +46,21 @@ jobs:
           # Replace with your build command (e.g., mvn clean install, npm run build, etc.)
           echo "Running build..."
           
-        # Run the SonarQube scanner
+         # Install SonarQube Scanner
+      - name: Install SonarQube Scanner
+        run: |
+          # Download and install SonarQube Scanner
+          curl -sSLo sonar-scanner.zip https://binaries.sonarsource.com/Commercial/sonar-scanner-cli/sonar-scanner-4.6.2.2472-linux.zip
+          unzip sonar-scanner.zip -d $HOME
+          export PATH=$HOME/sonar-scanner-4.6.2.2472-linux/bin:$PATH
+
+      # Run SonarQube scan
       - name: Run SonarQube Scan
         run: |
-          sonar-scanner \https://github.com/naveenkumar2412/sonarquben/blob/main/.github/workflows/sonar.yml
+          sonar-scanner \
             -Dsonar.projectKey=sonarqube \
+            -Dsonar.projectName="sonarqube" \
+            -Dsonar.projectVersion=1.0 \
+            -Dsonar.sources=src \
             -Dsonar.host.url=http://65.0.117.200:9000 \
             -Dsonar.login=${{ secrets.SONAR_TOKEN }}
