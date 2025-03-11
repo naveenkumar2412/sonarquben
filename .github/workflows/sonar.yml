@@ -43,7 +43,7 @@ jobs:
               -Dsonar.projectKey=sonarqube \
               -Dsonar.projectName="sonarqube" \
               -Dsonar.projectVersion=1.0 \
-              -Dsonar.sources=sonarquben/MyWebApp/src/main \
+              -Dsonar.sources=MyWebApp/src/main \
               -Dsonar.host.url=http://65.0.117.200:9000 \
               -Dsonar.login=${{ secrets.SONAR_TOKEN }}
 
