@@ -35,8 +35,7 @@ jobs:
       # SonarQube Scan
   sonarcloud:
     name: SonarCloud Scan
-    runs-on: ubuntu-latest
-
+    runs-on: ubuntu-l
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -46,19 +45,16 @@ jobs:
           # Replace with your build command (e.g., mvn clean install, npm run build, etc.)
           echo "Running build..."
           
-      # Install SonarQube Scanner via apt
-      - name: Install SonarQube Scanner
+     # Run SonarQube scan using Docker
+      - name: Run SonarQube Scan (using Docker)
         run: |
-          sudo apt-get update
-          sudo apt-get install -y sonar-scanner
-
-      # Run SonarQube scan
-      - name: Run SonarQube Scan
-        run: |
-          sonar-scanner \
-            -Dsonar.projectKey=sonarqube \
-            -Dsonar.projectName="sonarqube" \
-            -Dsonar.projectVersion=1.0 \
-            -Dsonar.sources=src \
-            -Dsonar.host.url=http://65.0.117.200:9000 \
-            -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+          docker run --rm \
+            -v $(pwd):/usr/src \
+            sonarsource/sonar-scanner-cli:4.6 \
+            sonar-scanner \
+              -Dsonar.projectKey=my-sonarqube \
+              -Dsonar.projectName="sonarqube" \
+              -Dsonar.projectVersion=1.0 \
+              -Dsonar.sources=src \
+              -Dsonar.host.url=http://65.0.117.200:9000 \
+              -Dsonar.login=${{ secrets.SONAR_TOKEN }}
