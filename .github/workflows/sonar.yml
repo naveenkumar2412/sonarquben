@@ -11,6 +11,7 @@ on:
 jobs:
   sonarQube:
     runs-on: ubuntu-latest
+
     steps:
       # Checkout the code
       - name: Checkout Code
@@ -23,29 +24,16 @@ jobs:
           distribution: 'temurin'  # You can also use 'zulu' or other supported distributions
           java-version: '11'
 
-      # Cache SonarQube scanner dependencies
+      # Cache SonarQube dependencies
       - name: Cache SonarQube dependencies
         uses: actions/cache@v3
         with:
           path: ~/.sonar/cache
-          key: ${{ runner.os }}-sonar-${{ hashFiles('/*.java') }}
+          key: ${{ runner.os }}-sonar-${{ hashFiles('**/*.java') }}  # Adjust for your project type
           restore-keys: |
             ${{ runner.os }}-sonar-
 
-      # SonarQube Scan
-  sonarcloud:
-    name: SonarCloud Scan
-    runs-on: ubuntu-l
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Run your build and tests
-        run: |
-          # Replace with your build command (e.g., mvn clean install, npm run build, etc.)
-          echo "Running build..."
-          
-     # Install SonarQube Scanner manually
+      # Install SonarQube Scanner manually
       - name: Install SonarQube Scanner
         run: |
           # Download and install SonarQube Scanner
@@ -57,9 +45,10 @@ jobs:
       - name: Run SonarQube Scan
         run: |
           sonar-scanner \
-            -Dsonar.projectKey=my-sonarqube \
+            -Dsonar.projectKey=sonarqube \
             -Dsonar.projectName="sonarqube" \
             -Dsonar.projectVersion=1.0 \
             -Dsonar.sources=src \
             -Dsonar.host.url=http://65.0.117.200:9000 \
             -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+
